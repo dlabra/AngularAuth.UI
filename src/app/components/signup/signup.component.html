@@ -1,0 +1,57 @@
+<div class="outer">
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
+                <div class="panel border bg-white">
+                    <div class="panel-heading">
+                        <h3 class="pt-3 font-weight-bold">Sign Up</h3>
+                    </div>
+                    <div class="panel-body p-3">
+                        <form>
+                            <div class="form-group pt-3">
+                                <div class="input-field">
+                                    <span class="fa fa-user p-2"></span>
+                                    <input type="text" placeholder="FirstName">
+                                </div>
+                            </div>
+                            <div class="form-group pt-3">
+                                <div class="input-field">
+                                    <span class="fa fa-user p-2"></span>
+                                    <input type="text" placeholder="LastName">
+                                </div>
+                            </div>
+                            <div class="form-group pt-3">
+                                <div class="input-field">
+                                    <span class="fa fa-user p-2"></span>
+                                    <input type="text" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group pt-3">
+                                <div class="input-field">
+                                    <span class="fa fa-user p-2"></span>
+                                    <input type="text" placeholder="Username">
+                                </div>
+                            </div>
+                            <div class="form-group pt-3">
+                                <div class="input-field">
+                                    <span class="fa fa-lock p-2"></span>
+                                    <input [type]="type" placeholder="Password">
+                                    <span (click)="hideShowPassword()" class="fa {{eyeIcon}}"></span>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block mt-4 w-100">Sign up</button>
+                            <div class="text-center pt-4 text-muted">Already have account? <a id="forget" class="font-weight-bold" routerLink="/login">Login</a></div>
+                        </form>
+                    </div>
+                    <!-- <div class="mx-3 my-2 py-2 bordert">
+                        <div class="text-center py-3">
+                            <a href="htts://www.facebook.com" target="_blank" class="px-2"><img src="https://cdn.imgbin.com/11/21/20/imgbin-facebook-logo-computer-icons-facebook-xnFrPQnUtPuvR3s5bGTUnZpEz.jpg" alt=""></a>
+                            <a href="htts://www.google.com" target="_blank" class="px-2"><img src="https://www.citypng.com/public/uploads/preview/google-logo-icon-gsuite-hd-701751694791470gzbayltphh.png" alt=""></a>
+                            <a href="htts://www.github.com" target="_blank" class="px-2"><img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/github-7521512-7196736.png" alt=""></a>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
