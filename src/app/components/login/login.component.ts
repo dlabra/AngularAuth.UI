@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import ValidateForm from '../../helpers/validators';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   eyeIcon: string = 'fa-eye-slash';
   loginForm!: FormGroup; //step 2: Create a form group for the login form
 
-  constructor(private formBuilder: FormBuilder) { } //step 3: Inject the form builder service
+  constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router ) { } //step 3: Inject the form builder service
 
   ngOnInit(): void {
     //step 4: Create the login form with the form builder service
@@ -38,6 +39,17 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if(this.loginForm.valid) {
       console.log(this.loginForm.value);
+      this.auth.login(this.loginForm.value)
+      .subscribe({
+        next:(res)=>{
+          console.log(res.message);
+          this.loginForm.reset();
+          this.router.navigate(['/dashboard']);
+        },
+        error:(err)=>{
+          alert(err.error.message);
+        }
+      });
     }else{
       //throw error
       ValidateForm.validateAllFormFields(this.loginForm);

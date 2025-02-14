@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import ValidateForm from '../../helpers/validators';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -17,7 +18,7 @@ export class SignupComponent implements OnInit {
   eyeIcon: string = 'fa-eye-slash';
   signupForm!: FormGroup;
   
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router ) { }
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
@@ -37,7 +38,19 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
       if(this.signupForm.valid) {
-        console.log(this.signupForm.value);
+        this.auth.signUp(this.signupForm.value)
+      .subscribe({
+        next:(res)=>{
+          console.log(res.message);
+          this.signupForm.reset();
+          this.router.navigate(['/login']);
+        },
+        error:(err)=>{
+          alert(err.error.message);
+        }
+      });
+
+        
       }else{
         //throw error
         ValidateForm.validateAllFormFields(this.signupForm);
