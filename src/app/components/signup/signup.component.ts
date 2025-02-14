@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { Router, RouterModule } from '@angular/router';
 import ValidateForm from '../../helpers/validators';
 import { AuthService } from '../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -18,7 +19,7 @@ export class SignupComponent implements OnInit {
   eyeIcon: string = 'fa-eye-slash';
   signupForm!: FormGroup;
   
-  constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router ) { }
+  constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router, private toastr: ToastrService ) { }
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
@@ -39,22 +40,20 @@ export class SignupComponent implements OnInit {
   onSubmit() {
       if(this.signupForm.valid) {
         this.auth.signUp(this.signupForm.value)
-      .subscribe({
-        next:(res)=>{
-          console.log(res.message);
-          this.signupForm.reset();
-          this.router.navigate(['/login']);
-        },
-        error:(err)=>{
-          alert(err.error.message);
-        }
-      });
-
-        
+        .subscribe({
+          next:(res)=>{
+            console.log(res.message);
+            this.signupForm.reset();
+            this.toastr.success('Signup successful');
+            this.router.navigate(['/login']);
+          },
+          error:(err)=>{
+            this.toastr.error('Signup failed');	
+          }
+      });        
       }else{
         //throw error
         ValidateForm.validateAllFormFields(this.signupForm);
-       // alert('Please fill in the required fields');
       }
     }
 }

@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { Router, RouterModule } from '@angular/router';
 import ValidateForm from '../../helpers/validators';
 import { AuthService } from '../../services/auth.service';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   eyeIcon: string = 'fa-eye-slash';
   loginForm!: FormGroup; //step 2: Create a form group for the login form
 
-  constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router ) { } //step 3: Inject the form builder service
+  constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router, private toastr: ToastrService ) { } //step 3: Inject the form builder service
 
   ngOnInit(): void {
     //step 4: Create the login form with the form builder service
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     });
   } 
 
-  hideShowPassword() {
+  hideShowPassword() {   
     this.isText = !this.isText;
     this.isText ? this.type = 'text' : this.type = 'password';
     this.isText ? this.eyeIcon = 'fa-eye' : this.eyeIcon = 'fa-eye-slash';
@@ -44,16 +44,17 @@ export class LoginComponent implements OnInit {
         next:(res)=>{
           console.log(res.message);
           this.loginForm.reset();
+          this.toastr.success('Login successful');
           this.router.navigate(['/dashboard']);
         },
         error:(err)=>{
-          alert(err.error.message);
+          this.toastr.error('Login failed');
         }
       });
     }else{
       //throw error
       ValidateForm.validateAllFormFields(this.loginForm);
-      alert('Please fill in the required fields');
+      this.toastr.error('Please fill in the required fields');
     }
   }
 
