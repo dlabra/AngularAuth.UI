@@ -37,12 +37,10 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    if(this.loginForm.valid) {
-      console.log(this.loginForm.value);
+    if(this.loginForm.valid) {      
       this.auth.login(this.loginForm.value)
       .subscribe({
         next:(res)=>{
-          console.log(res.message);
           this.loginForm.reset();
           this.toastr.success('Login successful');
           this.router.navigate(['/dashboard']);
