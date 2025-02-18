@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next:(res)=>{
           this.loginForm.reset();
+          this.auth.storeToken(res.token);
           this.toastr.success('Login successful');
           this.router.navigate(['/dashboard']);
         },
