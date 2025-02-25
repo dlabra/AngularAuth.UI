@@ -1,6 +1,10 @@
-<p>dashboard works!</p>
-<button class="btn btn-danger" (click)="logout()">Log out</button>
-
-<ul *ngFor="let user of users">
-    <li>{{user.username}}</li>
-</ul>
+<nav class="navbar navbar-light bg-light justify-content-between">
+    <a class="navbar-brand">Angular Auth</a>
+    <div>
+        <h4>Hello {{fullName}}</h4>
+        <button class="btn btn-outline-success my-2 my-sm-0" (click)="logout()">Logout</button>
+        <ng-container *ngIf="role === 'Admin'">
+            <h4>You are Admin</h4>
+        </ng-container>
+    </div>
+  </nav>

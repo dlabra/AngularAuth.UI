@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import ValidateForm from '../../helpers/validators';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { UserStoreService } from '../../services/user-store.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,13 @@ export class LoginComponent implements OnInit {
   eyeIcon: string = 'fa-eye-slash';
   loginForm!: FormGroup; //step 2: Create a form group for the login form
 
-  constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router, private toastr: ToastrService ) { } //step 3: Inject the form builder service
+  constructor(
+    private formBuilder: FormBuilder, 
+    private auth: AuthService, 
+    private router: Router, 
+    private toastr: ToastrService, 
+    private userStore: UserStoreService 
+  ) { } //step 3: Inject the form builder service
 
   ngOnInit(): void {
     //step 4: Create the login form with the form builder service
@@ -43,6 +50,9 @@ export class LoginComponent implements OnInit {
         next:(res)=>{
           this.loginForm.reset();
           this.auth.storeToken(res.token);
+          const tokenPayload = this.auth.decodedToken();
+          this.userStore.setFullNameForStore(tokenPayload.unique_name);
+          this.userStore.setRoleForStore(tokenPayload.role);
           this.toastr.success('Login successful');
           this.router.navigate(['/dashboard']);
         },
