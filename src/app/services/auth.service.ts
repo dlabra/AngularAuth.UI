@@ -75,4 +75,8 @@ export class AuthService {
   renewToken(tokenApi: TokenApiModel) {
     return this.http.post<any>(`${this.baseUrl}refresh`, tokenApi);
   }
+
+  resetPassword(email: string) {
+    return this.http.post<any>(`${this.baseUrl}resetpassword`, email);
+  }
 }
